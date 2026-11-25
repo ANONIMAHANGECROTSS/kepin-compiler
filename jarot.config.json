@@ -1,6 +1,6 @@
 {
-  "appName": "Jarot Native",
-  "packageName": "com.jarot.native",
+  "appName": "Jarot Demo",
+  "packageName": "com.jarot.demo",
   "engine": "native",
   "builtBy": "JAROTCOMPILER"
 }

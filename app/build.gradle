@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.jarot.native'
+    namespace 'com.jarot.demo'
     compileSdk 34
 
     defaultConfig {
-        applicationId 'com.jarot.native'
+        applicationId 'com.jarot.demo'
         minSdk 21
         targetSdk 34
         versionCode 1
