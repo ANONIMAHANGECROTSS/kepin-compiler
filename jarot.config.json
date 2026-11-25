@@ -1,6 +1,6 @@
 {
-  "appName": "Jarot Browser",
-  "packageName": "com.jarot.browser",
-  "engine": "flutter",
+  "appName": "Jarot Final Test",
+  "packageName": "com.jarot.finaltest",
+  "engine": "native",
   "builtBy": "JAROTCOMPILER"
 }

@@ -1,8 +1,8 @@
-# Jarot Browser
+# Jarot Final Test
 
-Dibuat dengan JAROTCOMPILER — engine Flutter.
+Dibuat dengan JAROTCOMPILER — engine Native (Java + Gradle).
 
 - Package: $pkg
-- Edit file di explorer, lalu tekan BUILD APK.
+- Entry point: app/src/main/java/com/jarot/finaltest/MainActivity.java
 
-Setelah build sukses, APK bisa diunduh langsung dari halaman build.
+Tekan BUILD APK untuk compile, lalu unduh hasilnya.
