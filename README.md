@@ -1,8 +1,8 @@
-# Jarot Demo
+# Jarot Flut
 
-Dibuat dengan JAROTCOMPILER — engine Native (Java + Gradle).
+Dibuat dengan JAROTCOMPILER — engine Flutter.
 
 - Package: $pkg
-- Entry point: app/src/main/java/com/jarot/demo/MainActivity.java
+- Edit file di explorer, lalu tekan BUILD APK.
 
-Tekan BUILD APK untuk compile, lalu unduh hasilnya.
+Setelah build sukses, APK bisa diunduh langsung dari halaman build.
