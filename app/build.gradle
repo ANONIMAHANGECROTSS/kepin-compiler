@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.jarot.finaltest'
+    namespace 'com.jarot.app'
     compileSdk 34
 
     defaultConfig {
-        applicationId 'com.jarot.finaltest'
+        applicationId 'com.jarot.app'
         minSdk 21
         targetSdk 34
         versionCode 1

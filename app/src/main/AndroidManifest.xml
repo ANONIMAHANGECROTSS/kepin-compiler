@@ -3,7 +3,7 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="Jarot Final Test"
+        android:label="JAROT"
         android:theme="@android:style/Theme.Material.NoActionBar"
         android:allowBackup="true">
 
