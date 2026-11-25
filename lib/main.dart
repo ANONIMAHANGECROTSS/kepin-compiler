@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Package: $pkg',
+              'Package: com.jarot.flut',
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
