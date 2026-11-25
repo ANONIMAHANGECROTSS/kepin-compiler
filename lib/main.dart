@@ -8,7 +8,7 @@ class JarotApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Jarot Flut',
+      title: 'Jarot Browser',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
@@ -44,12 +44,12 @@ class HomePage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Text(
-              'Hello dari Jarot Flut!',
+              'Hello dari Jarot Browser!',
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: 8),
             Text(
-              'Package: com.jarot.flut',
+              'Package: com.jarot.browser',
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],

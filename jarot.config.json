@@ -1,6 +1,6 @@
 {
-  "appName": "Jarot Flut",
-  "packageName": "com.jarot.flut",
+  "appName": "Jarot Browser",
+  "packageName": "com.jarot.browser",
   "engine": "flutter",
   "builtBy": "JAROTCOMPILER"
 }

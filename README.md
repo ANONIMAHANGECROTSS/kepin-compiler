@@ -1,4 +1,4 @@
-# Jarot Flut
+# Jarot Browser
 
 Dibuat dengan JAROTCOMPILER — engine Flutter.
 
