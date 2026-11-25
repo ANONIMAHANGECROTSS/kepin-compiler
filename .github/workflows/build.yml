@@ -1,0 +1,120 @@
+name: Build APK
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build ${{ github.event_name }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout kode
+        uses: actions/checkout@v4
+
+      - name: Baca konfigurasi project
+        id: cfg
+        run: |
+          echo "engine=$(jq -r '.engine' jarot.config.json)" >> "$GITHUB_OUTPUT"
+          echo "app_name=$(jq -r '.appName' jarot.config.json)" >> "$GITHUB_OUTPUT"
+          echo "package=$(jq -r '.packageName' jarot.config.json)" >> "$GITHUB_OUTPUT"
+          echo "---- jarot.config.json ----"
+          cat jarot.config.json
+
+      # ================= ENGINE NATIVE (pure Gradle) =================
+      - name: Setup Java 17
+        if: steps.cfg.outputs.engine == 'native'
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Pasang icon launcher
+        if: steps.cfg.outputs.engine == 'native'
+        run: |
+          mkdir -p app/src/main/res/mipmap-mdpi
+          cp jarot-icon.png app/src/main/res/mipmap-mdpi/ic_launcher.png
+          ls -R app/src/main/res
+
+      - name: Setup Gradle 8.9
+        if: steps.cfg.outputs.engine == 'native'
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Build APK Native (Gradle assembleRelease)
+        if: steps.cfg.outputs.engine == 'native'
+        run: |
+          gradle --version
+          gradle assembleRelease --no-daemon --stacktrace
+          ls -R app/build/outputs/apk
+
+      # ================= ENGINE FLUTTER (pure Flutter toolchain) =================
+      - name: Setup Java 17 (Flutter)
+        if: steps.cfg.outputs.engine == 'flutter'
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Setup Flutter
+        if: steps.cfg.outputs.engine == 'flutter'
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.3'
+          channel: stable
+          cache: true
+
+      - name: Generate platform Android
+        if: steps.cfg.outputs.engine == 'flutter'
+        run: |
+          flutter --version
+          if [ ! -d android ]; then
+            flutter create --platforms android --org com.jarot --project-name jarot_app /tmp/gen
+            cp -r /tmp/gen/android ./android
+          fi
+          ls android
+
+      - name: Set package name & icon
+        if: steps.cfg.outputs.engine == 'flutter'
+        run: |
+          PKG="${{ steps.cfg.outputs.package }}"
+          if [ -f android/app/build.gradle ] && grep -q 'applicationId' android/app/build.gradle; then
+            sed -i "s/applicationId \"\(.*\)\"/applicationId \"$PKG\"/" android/app/build.gradle
+          fi
+          if [ -d android/app/src/main/res/mipmap-anydpi-v26 ]; then
+            rm -rf android/app/src/main/res/mipmap-anydpi-v26
+          fi
+          for d in android/app/src/main/res/mipmap-*dpi; do
+            if [ -d "$d" ]; then
+              cp jarot-icon.png "$d/ic_launcher.png"
+            fi
+          done
+          grep applicationId android/app/build.gradle || true
+
+      - name: Build APK Flutter
+        if: steps.cfg.outputs.engine == 'flutter'
+        run: |
+          flutter pub get
+          flutter build apk --release
+          ls -R build/app/outputs/flutter-apk
+
+      # ================= ARTIFACT =================
+      - name: Upload APK Native
+        if: steps.cfg.outputs.engine == 'native'
+        uses: actions/upload-artifact@v4
+        with:
+          name: jarot-apk
+          path: app/build/outputs/apk/release/app-release.apk
+          if-no-files-found: error
+
+      - name: Upload APK Flutter
+        if: steps.cfg.outputs.engine == 'flutter'
+        uses: actions/upload-artifact@v4
+        with:
+          name: jarot-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
