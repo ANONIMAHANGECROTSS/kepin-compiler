@@ -1,5 +1,6 @@
 {
-  "appName": "JAROT",
-  "packageName": "com.jarot.app",
-  "engine": "native"
+  "appName": "Jarot Native",
+  "packageName": "com.jarot.native",
+  "engine": "native",
+  "builtBy": "JAROTCOMPILER"
 }
